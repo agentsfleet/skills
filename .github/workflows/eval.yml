@@ -1,0 +1,30 @@
+name: Skills CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  eval:
+    name: Eval (${{ matrix.skill }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        skill:
+          - usezombie-install-platform-ops
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install eval deps
+        working-directory: ${{ matrix.skill }}/evals
+        run: bun install
+
+      - name: Run pin tests
+        working-directory: ${{ matrix.skill }}/evals
+        run: bun test
