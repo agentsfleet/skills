@@ -121,8 +121,14 @@ The skill does not rotate credentials on its own. The documented
 rotation path is:
 
 ```bash
+# Capture the current webhook_secret so rotation preserves it; without
+# this the next inbound webhook would fail HMAC verification silently.
+OLD_SECRET=$(zombiectl credential show github --field webhook_secret)
+[ -z "$OLD_SECRET" ] && { echo "rotation aborted: no existing webhook_secret to preserve" >&2; exit 1; }
+
 op read 'op://<vault>/<item>/api_token' \
-  | jq -Rn '{webhook_secret: env.OLD_SECRET, api_token: input}' \
+  | jq -Rn --arg secret "$OLD_SECRET" \
+      '{webhook_secret: $secret, api_token: input}' \
   | zombiectl credential add github --force --data @-
 ```
 

@@ -277,5 +277,6 @@ surface the diagnostic and let the user fix it before retrying.
   + `zombiectl tenant provider add --credential <name>`. The skill never
   asks about, holds, or stores an LLM api_key.
 - GitHub App for auto-webhook configuration — separate milestone (next
-  install-UX iteration). Until then, manual paste is the documented
-  compromise; the in-flow self-test (step 10) is the safety net.
+  install-UX iteration). Until then, the `gh api repos/.../hooks` call
+  in step 9 is the documented path; the in-flow HMAC self-test (step 10)
+  is the safety net.

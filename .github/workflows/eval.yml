@@ -19,6 +19,8 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
         with:
+          # Pinned to match bun-types@1.3.14 in evals/bun.lock — avoids
+          # silent CI behaviour change on future bun major bumps.
           bun-version: "1.3.14"
 
       - name: Install eval deps
