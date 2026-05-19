@@ -19,5 +19,5 @@ test.skipIf(!NIGHTLY_GATE)("LLM-judge clarity ≥ 7/10 over 5 trials (nightly on
   //      via gh + HMAC before declaring success. Each criterion is 0-2.5;
   //      average ≥ 7 to pass.
   //   4. Run 5 trials; assert average ≥ 7.
-  throw new Error("nightly LLM-judge runner not yet implemented — set SKILL_EVAL_LLM_JUDGE=0 to skip");
+  throw new Error("nightly LLM-judge runner not yet implemented — unset SKILL_EVAL_LLM_JUDGE (or do not set it to 1) to skip");
 });
