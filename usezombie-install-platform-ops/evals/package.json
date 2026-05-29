@@ -1,0 +1,13 @@
+{
+  "name": "@usezombie/skill-evals-install-platform-ops",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.6.0"
+  }
+}
