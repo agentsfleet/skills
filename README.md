@@ -10,7 +10,7 @@
 
 Long-lived runtimes that own one operational outcome end to end. These skills
 teach Claude Code, Codex CLI, Amp, and OpenCode to drive `zombiectl`
-non-interactively so your agent can install, steer, and inspect zombies
+non-interactively so your agent can install, steer, and inspect agents
 without you reading every flag.
 
 [![Docs](https://img.shields.io/badge/usezombie-Docs-5EEAD4?style=for-the-badge)](https://docs.usezombie.com)
@@ -69,12 +69,12 @@ zombiectl auth login
 <details>
 <summary><strong>usezombie-install-platform-ops</strong></summary>
 
-One-command install of the platform-ops zombie on a user's repo. Watches
+One-command install of the platform-ops agent on a user's repo. Watches
 GitHub Actions CD failures and posts evidenced diagnoses to Slack.
 
 **Use when:**
 
-- Setting up a zombie on a new repo for the first time
+- Setting up an agent on a new repo for the first time
 - Resolving tool credentials (Fly, Slack, GitHub, Upstash) via 1Password / env / prompt
 - Registering and HMAC-verifying webhooks from the user's local `gh`
 - Smoke-testing the install with a real steer round-trip
