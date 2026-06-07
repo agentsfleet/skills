@@ -261,7 +261,7 @@ surface the diagnostic and let the user fix it before retrying.
 | 3 | Re-running the skill on a second repo and overwriting `github.webhook_secret` | The credential `add` default skip-if-exists prevents this. Don't pass `--force` unless rotating. The skill prompts reuse-vs-scope on second install (step 5). |
 | 4 | Asking the user to paste the webhook into GitHub Settings → Webhooks | The skill registers the webhook via `gh api repos/.../hooks` in step 9. There is no paste-into-github.com step in this flow. Self-verify with `openssl dgst -sha256 -hmac` + `curl` to the receiver (step 10) before declaring success. |
 | 5 | Hard-coding Claude Code's `AskUserQuestion` in the body prose | Use the host's question primitive when present, or inline natural-language prompts otherwise. This skill must work in Amp, Codex CLI, and OpenCode too. |
-| 6 | Calling the model-caps endpoint directly | Doctor's `tenant_provider` block already carries resolved values. Never add a network dependency for what doctor already has. |
+| 6 | Calling the cap.json endpoint directly | Doctor's `tenant_provider` block already carries resolved values. Never add a network dependency for what doctor already has. |
 | 7 | Asking the user about LLM model or self-managed key | Out-of-band — see [`references/self-managed-handoff.md`](references/self-managed-handoff.md). The skill never holds an LLM api_key. |
 
 ## When to Load References
