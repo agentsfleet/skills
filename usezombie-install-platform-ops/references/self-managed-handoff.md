@@ -90,8 +90,8 @@ when no `tenant_providers` row exists).
 ## What this reference does not cover
 
 - Picking which provider to use — that's a product decision (cost,
-  context window, model quality, region). The model-caps endpoint at
-  `https://api.usezombie.com/_um/da5b6b3810543fe108d816ee972e4ff8/model-caps.json`
+  context window, model quality, region). The cap.json endpoint at
+  `https://api.usezombie.com/_um/da5b6b3810543fe108d816ee972e4ff8/cap.json`
   lists every supported model with its context cap and per-token rate.
 - Multi-provider routing — there is one active provider per tenant.
   Per-zombie provider override is a future milestone.
