@@ -15,13 +15,13 @@ substitution path both look up by convention.
 | Slack | `slack` | `{"api_token": "<xoxb-bot-token>"}` | Single field. The bot must already be invited to the channel the operator named at install. |
 | Upstash | `upstash` (optional) | `{"redis_url": "<value>", "redis_token": "<value>"}` | Skipped if the repo has no Redis evidence (no `upstash` strings in deploy config, no `REDIS_URL` env). |
 
-The vault credential name is a **convention**, not a per-zombie
+The vault credential name is a **convention**, not a per-agent
 pointer. The webhook ingest resolver looks the credential up by
 `name = trigger.source` automatically — so the generated TRIGGER.md
 does not write a `signature.secret_ref:` field for the convention case.
-The only exception is when the user picked per-zombie scoping (option B
+The only exception is when the user picked per-agent scoping (option B
 in the install-skill's step 5): then the generated TRIGGER.md carries
-`credential_name: github-{zombie_slug}` and that name overrides the
+`credential_name: github-{agent_slug}` and that name overrides the
 default lookup.
 
 ## Resolution order, per field
@@ -62,7 +62,7 @@ stop at the first hit:
 The `webhook_secret` field on the `github` credential is the one
 exception: the skill generates it locally (32 CSPRNG bytes,
 base64-encoded) on first install rather than reading it from any of
-the three sources above. Subsequent installs reuse or scope-per-zombie
+the three sources above. Subsequent installs reuse or scope-per-agent
 per the install-skill's step 5.
 
 ## Why JSON on stdin (`--data @-`)
@@ -74,7 +74,7 @@ The skill never passes credential JSON via `--data '<JSON>'` because:
 - Audit logs of the user's shell sessions get a verbatim copy.
 
 Piping on stdin (`--data @-`) keeps secret bytes inside the process
-boundary. The JSON arrives at `zombiectl` via `read(0)`; the parent
+boundary. The JSON arrives at `agentsfleet` via `read(0)`; the parent
 shell has no record of the payload.
 
 ## `gh` authentication precondition (webhook registration)
@@ -107,7 +107,7 @@ on the GitHub side. There is no paste-into-github.com step.
 
 ## Storing fewer fields than the JSON shape suggests
 
-`zombiectl credential add` accepts any JSON object — the field set is
+`agentsfleet credential add` accepts any JSON object — the field set is
 not validated against a schema. If a credential body is missing a
 field that downstream code needs (e.g. `slack` without `api_token`),
 the failure surfaces at *use* time as `secret_not_found` against
@@ -123,13 +123,13 @@ rotation path is:
 ```bash
 # Capture the current webhook_secret so rotation preserves it; without
 # this the next inbound webhook would fail HMAC verification silently.
-OLD_SECRET=$(zombiectl credential show github --field webhook_secret)
+OLD_SECRET=$(agentsfleet credential show github --field webhook_secret)
 [ -z "$OLD_SECRET" ] && { echo "rotation aborted: no existing webhook_secret to preserve" >&2; exit 1; }
 
 op read 'op://<vault>/<item>/api_token' \
   | jq -Rn --arg secret "$OLD_SECRET" \
       '{webhook_secret: $secret, api_token: input}' \
-  | zombiectl credential add github --force --data @-
+  | agentsfleet credential add github --force --data @-
 ```
 
 `--force` overrides the default skip-if-exists. The skill never emits

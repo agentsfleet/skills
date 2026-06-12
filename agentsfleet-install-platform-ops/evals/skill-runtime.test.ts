@@ -6,8 +6,8 @@
 // the LLM does at that step.
 //
 // TRIGGER.md template assertions from the original Node:test suite stayed
-// in usezombie (samples/platform-ops/TRIGGER.md lives there, not in this
-// repo). See usezombie's tests/template-substitution/ for that surface.
+// in agentsfleet (samples/platform-ops/TRIGGER.md lives there, not in this
+// repo). See agentsfleet's tests/template-substitution/ for that surface.
 
 import { test, expect } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -19,13 +19,13 @@ const skillDir = resolve(__dirname, "..");
 const skillBody = readFileSync(resolve(skillDir, "SKILL.md"), "utf8");
 
 test("s1.0 — precondition check command + stop-on-miss prose", () => {
-  expect(skillBody).toMatch(/which zombiectl && which gh && zombiectl doctor --json/);
+  expect(skillBody).toMatch(/which agentsfleet && which gh && agentsfleet doctor --json/);
   expect(skillBody).toMatch(/Any miss → print the exact one-liner above to fix it and stop\./);
 });
 
-test("s1.0 — missing-zombiectl remediation: npm install one-liner", () => {
-  expect(skillBody).toMatch(/npm install -g @usezombie\/zombiectl/);
-  const installIdx = skillBody.indexOf("npm install -g @usezombie/zombiectl");
+test("s1.0 — missing-agentsfleet remediation: npm install one-liner", () => {
+  expect(skillBody).toMatch(/npm install -g @agentsfleet\/cli/);
+  const installIdx = skillBody.indexOf("npm install -g @agentsfleet/cli");
   const stopIdx = skillBody.indexOf("Any miss → print the exact one-liner above");
   expect(installIdx).toBeGreaterThan(-1);
   expect(stopIdx).toBeGreaterThan(-1);
@@ -38,7 +38,7 @@ test("s1.0 — missing-gh-scope remediation: gh auth refresh one-liner", () => {
 });
 
 test("s1.8 — parses triggers[] from rendered TRIGGER.md, skips non-webhook for s1.9", () => {
-  expect(skillBody).toMatch(/extract\s+`x-usezombie\.triggers\[\]`/);
+  expect(skillBody).toMatch(/extract\s+`x-agentsfleet\.triggers\[\]`/);
   expect(skillBody).toMatch(/Skip non-webhook entries\s+\(cron \/ api\)/);
 });
 

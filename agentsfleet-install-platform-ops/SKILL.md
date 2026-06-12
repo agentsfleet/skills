@@ -3,7 +3,7 @@ name: agentsfleet-install-platform-ops
 description: >
   Install an agentsfleet platform-ops agent on this repo — watches GitHub
   Actions CD failures and posts evidenced diagnoses to Slack. Always load
-  this skill before running `zombiectl zombie install` for platform-ops; it
+  this skill before running `agentsfleet agent install` for platform-ops; it
   knows the doctor preflight, credential resolution order, webhook setup,
   and smoke-test steps that prevent silent failures.
 license: Apache-2.0
@@ -13,7 +13,7 @@ metadata:
   homepage: https://agentsfleet.net/docs/skills
   source: https://github.com/agentsfleet/skills
   requires:
-    bins: [zombiectl, gh, openssl, curl]
+    bins: [agentsfleet, gh, openssl, curl]
     optional_bins: [op]
 inputs:
   - name: slack_channel
@@ -40,16 +40,16 @@ with agentsfleet, and authorize `gh` for webhook registration on the
 user's machine:
 
 ```bash
-npm install -g @usezombie/zombiectl     # CLI + bundled samples (postinstall copies ~/.config/usezombie/samples/)
+npm install -g @agentsfleet/cli     # CLI + bundled samples (postinstall copies ~/.config/agentsfleet/samples/)
 npx skills add agentsfleet/skills         # symlinks /agentsfleet-* into the host's skill paths
-zombiectl auth login                     # Clerk OAuth → token in ~/.config/usezombie/auth.json
+agentsfleet auth login                     # Clerk OAuth → token in ~/.config/agentsfleet/auth.json
 gh auth login -s admin:repo_hook         # one-time; lets the install-skill register webhooks via `gh api`
 ```
 
 The skill's **first action** (step 1 below) is the precondition check:
 
 ```bash
-which zombiectl && which gh && zombiectl doctor --json
+which agentsfleet && which gh && agentsfleet doctor --json
 ```
 
 Any miss → print the exact one-liner above to fix it and stop. The
@@ -71,7 +71,7 @@ Same shape for `~/.codex/skills/`, `~/.amp/skills/`, `~/.opencode/skills/`.
 
 ## Agent Protocol
 
-This skill drives `zombiectl` non-interactively. Every `zombiectl`
+This skill drives `agentsfleet` non-interactively. Every `agentsfleet`
 invocation uses `--json` where the flag is supported, parses the JSON
 response, and surfaces stderr verbatim on failure. Exit `0` is success;
 non-zero is a hard stop. Never proceed past a failed step. Never silently
@@ -85,8 +85,8 @@ hard-code any one host's primitive in this skill body** — the same
 
 ## Authentication
 
-`zombiectl` auth is checked once via `zombiectl doctor --json`. If
-`auth_token_present` is `false`, print `Run zombiectl auth login first`
+`agentsfleet` auth is checked once via `agentsfleet doctor --json`. If
+`auth_token_present` is `false`, print `Run agentsfleet auth login first`
 and stop. The skill never logs in on the user's behalf.
 
 Tool credentials (`fly`, `slack`, `github`, `upstash`) resolve in this
@@ -100,7 +100,7 @@ order, per field:
 3. Masked interactive prompt (host-neutral question primitive).
 
 JSON bodies are piped through stdin into
-`zombiectl credential add <name> --data @-` so secret bytes never appear
+`agentsfleet credential add <name> --data @-` so secret bytes never appear
 in shell history or process argv. Never pass JSON via `--data '<JSON>'`.
 
 See [`references/credential-resolution.md`](references/credential-resolution.md)
@@ -111,7 +111,7 @@ for the full resolution table and op layout examples.
 Walk these twelve steps top-to-bottom. Stop on the first failure;
 surface the diagnostic and let the user fix it before retrying.
 
-1. **Doctor preflight.** Run `zombiectl doctor --json`. If any check
+1. **Doctor preflight.** Run `agentsfleet doctor --json`. If any check
    fails — auth missing, no workspace binding, vault unreachable —
    surface the response and stop. The `tenant_provider` block in the
    response is the source of `model` and `context_cap_tokens` for the
@@ -135,7 +135,7 @@ surface the diagnostic and let the user fix it before retrying.
    and M48 respectively.
 5. **Resolve the GitHub webhook secret.** Check whether the workspace
    already has a `github` credential with a `webhook_secret` field
-   (`zombiectl credential show github --json` returns presence without
+   (`agentsfleet credential show github --json` returns presence without
    echoing the secret bytes). Two paths:
    - **No existing secret (first install for the workspace):** generate
      32 CSPRNG bytes, base64-encode, hold in a local variable for the
@@ -144,23 +144,23 @@ surface the diagnostic and let the user fix it before retrying.
    - **Existing secret (second install):** ask the user to choose:
      **A) Reuse the workspace-shared secret** — write nothing new to
      `webhook_secret`; `api_token` still upserts. **B) Scope a
-     per-zombie credential** — generate a new secret, store under
-     credential name `github-{zombie_slug}`, and write
-     `credential_name: github-{zombie_slug}` into the generated
+     per-agent credential** — generate a new secret, store under
+     credential name `github-{agent_slug}`, and write
+     `credential_name: github-{agent_slug}` into the generated
      TRIGGER.md as the M43 override.
 6. **Resolve four tool credentials.** For each of `fly`, `slack`,
    `github`, optional `upstash`, walk the resolution order
    (op → env → prompt) per field, build the JSON body, and pipe it
-   into `zombiectl credential add <name> --data @-`. Default behaviour
+   into `agentsfleet credential add <name> --data @-`. Default behaviour
    is skip-if-exists; the skill relies on this to avoid clobbering a
    workspace-shared `github.webhook_secret` on a second install. Never
    pass `--force` unless the user explicitly asked to rotate.
 7. **Generate the per-repo files + install.** Read the canonical
-   template from `~/.config/usezombie/samples/platform-ops/`. If the
+   template from `~/.config/agentsfleet/samples/platform-ops/`. If the
    directory is missing, the npm install was corrupted or postinstall
    was skipped — print `Cannot find platform-ops template at
-   ~/.config/usezombie/samples/platform-ops/. Reinstall: npm install
-   -g @usezombie/zombiectl` and exit. Never fetch from a URL. Never
+   ~/.config/agentsfleet/samples/platform-ops/. Reinstall: npm install
+   -g @agentsfleet/cli` and exit. Never fetch from a URL. Never
    cache. The npm package version *is* the template version.
 
    Substitute the five placeholders into the template's `SKILL.md`
@@ -178,8 +178,8 @@ surface the diagnostic and let the user fix it before retrying.
    If `.agentsfleet/platform-ops/` already exists, prompt overwrite
    (default `N`). On `N`, exit cleanly with no changes to disk.
 
-   Run `zombiectl zombie install --from .agentsfleet/platform-ops/ --json`.
-   Capture `zombie_id` and the `webhook_urls` map from the response.
+   Run `agentsfleet agent install --from .agentsfleet/platform-ops/ --json`.
+   Capture `agent_id` and the `webhook_urls` map from the response.
    The map is keyed by `<source>` (`github`, `linear`, `jira`, etc.)
    with `<receiver-URL>` values. Cron-only / api-only installs return
    `webhook_urls: {}` and skip steps 8–10. If the response lacks
@@ -187,7 +187,7 @@ surface the diagnostic and let the user fix it before retrying.
    JSON missing webhook_urls — file an issue".
 8. **Parse the rendered TRIGGER.md.** Read
    `.agentsfleet/platform-ops/TRIGGER.md` (the file just written in
-   step 7), extract `x-usezombie.triggers[]`, and for each `webhook`
+   step 7), extract `x-agentsfleet.triggers[]`, and for each `webhook`
    entry capture `source`, `events` (default empty = "all events for
    this provider"), and the optional `credential_name` override.
    These drive the gh-api loop in step 9. Skip non-webhook entries
@@ -239,24 +239,24 @@ surface the diagnostic and let the user fix it before retrying.
     Expect HTTP `202` per source. On non-202, network failure, or
     HMAC mismatch, print the response verbatim and stop. The user
     never finds out hours later that HMAC is wrong.
-11. **Post-install summary.** Print the `zombie_id`, the registered
+11. **Post-install summary.** Print the `agent_id`, the registered
     `hook_id` per source (e.g. `webhook:github → hook 482389123`),
     the HMAC-verified status per source, and the credentials stored
     in the workspace vault. **No paste-into-GitHub prose** — the
     user's `gh` already did the registration in step 9.
 12. **Smoke test.** Run
-    `zombiectl steer {zombie_id} "morning health check"` and stream
+    `agentsfleet steer {agent_id} "morning health check"` and stream
     the response inline. If the round-trip exceeds 60 seconds, print
-    "zombie installed but first response slow — check
-    `zombiectl events {zombie_id}`" and stop. Otherwise the user has a
-    working zombie posting to their Slack within ~60 seconds of
+    "agent installed but first response slow — check
+    `agentsfleet events {agent_id}`" and stop. Otherwise the user has a
+    working agent posting to their Slack within ~60 seconds of
     invoking this skill.
 
 ## Common Mistakes
 
 | # | Mistake | Fix |
 |---|---|---|
-| 1 | Skipping `zombiectl doctor` and going straight to install | Doctor is the only sanctioned readiness check. Always run it first. |
+| 1 | Skipping `agentsfleet doctor` and going straight to install | Doctor is the only sanctioned readiness check. Always run it first. |
 | 2 | Passing the JSON body via `--data '<JSON>'` instead of `--data @-` | Secret bytes leak into shell history and `ps` output. Always pipe JSON on stdin. |
 | 3 | Re-running the skill on a second repo and overwriting `github.webhook_secret` | The credential `add` default skip-if-exists prevents this. Don't pass `--force` unless rotating. The skill prompts reuse-vs-scope on second install (step 5). |
 | 4 | Asking the user to paste the webhook into GitHub Settings → Webhooks | The skill registers the webhook via `gh api repos/.../hooks` in step 9. There is no paste-into-github.com step in this flow. Self-verify with `openssl dgst -sha256 -hmac` + `curl` to the receiver (step 10) before declaring success. |
@@ -273,8 +273,8 @@ surface the diagnostic and let the user fix it before retrying.
 ## Out of Scope
 
 - Non-GitHub-Actions CI providers (GitLab, CircleCI, Jenkins) — future milestone.
-- self-managed setup — out-of-band, via `zombiectl credential add <name> --data @-`
-  + `zombiectl tenant provider add --credential <name>`. The skill never
+- self-managed setup — out-of-band, via `agentsfleet credential add <name> --data @-`
+  + `agentsfleet tenant provider add --credential <name>`. The skill never
   asks about, holds, or stores an LLM api_key.
 - GitHub App for auto-webhook configuration — separate milestone (next
   install-UX iteration). Until then, the `gh api repos/.../hooks` call

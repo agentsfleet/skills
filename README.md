@@ -9,7 +9,7 @@
 **Agent skills for agentsfleet — install, drive, and operate agents from any AI coding host.**
 
 Long-lived runtimes that own one operational outcome end to end. These skills
-teach Claude Code, Codex CLI, Amp, and OpenCode to drive `zombiectl`
+teach Claude Code, Codex CLI, Amp, and OpenCode to drive `agentsfleet`
 non-interactively so your agent can install, steer, and inspect agents
 without you reading every flag.
 
@@ -57,11 +57,11 @@ claude plugin install agentsfleet-install-platform-ops@agentsfleet-skills
 
 ### Prerequisites
 
-Most skills here drive `zombiectl`. Install it first:
+Most skills here drive `agentsfleet`. Install it first:
 
 ```bash
-npm install -g @usezombie/zombiectl
-zombiectl auth login
+npm install -g @agentsfleet/cli
+agentsfleet auth login
 ```
 
 ## Available Skills
