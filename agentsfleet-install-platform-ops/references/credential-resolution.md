@@ -40,16 +40,16 @@ stop at the first hit:
    Each user has their own `op` layout. If the field returns empty or
    `op` errors out, fall through to step 2.
 
-2. **Environment variable** named `ZOMBIE_CRED_<NAME>_<FIELD>` —
+2. **Environment variable** named `AGENTSFLEET_CRED_<NAME>_<FIELD>` —
    uppercase, underscores. Examples:
 
    ```bash
-   ZOMBIE_CRED_FLY_API_TOKEN
-   ZOMBIE_CRED_FLY_HOST
-   ZOMBIE_CRED_GITHUB_API_TOKEN
-   ZOMBIE_CRED_SLACK_API_TOKEN
-   ZOMBIE_CRED_UPSTASH_REDIS_URL
-   ZOMBIE_CRED_UPSTASH_REDIS_TOKEN
+   AGENTSFLEET_CRED_FLY_API_TOKEN
+   AGENTSFLEET_CRED_FLY_HOST
+   AGENTSFLEET_CRED_GITHUB_API_TOKEN
+   AGENTSFLEET_CRED_SLACK_API_TOKEN
+   AGENTSFLEET_CRED_UPSTASH_REDIS_URL
+   AGENTSFLEET_CRED_UPSTASH_REDIS_TOKEN
    ```
 
    Useful in CI fixtures and for quick tests; not the recommended

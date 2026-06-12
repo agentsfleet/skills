@@ -95,8 +95,8 @@ order, per field:
 1. `op read 'op://<your-vault>/<your-item>/<field>'` — uses the user's
    existing 1Password layout. The skill does not prescribe a vault or
    item-naming convention.
-2. Environment variable `ZOMBIE_CRED_<NAME>_<FIELD>` (e.g.
-   `ZOMBIE_CRED_FLY_API_TOKEN`).
+2. Environment variable `AGENTSFLEET_CRED_<NAME>_<FIELD>` (e.g.
+   `AGENTSFLEET_CRED_FLY_API_TOKEN`).
 3. Masked interactive prompt (host-neutral question primitive).
 
 JSON bodies are piped through stdin into
