@@ -30,7 +30,7 @@ Cursor.
 ### Install all agentsfleet skills
 
 ```bash
-npx skills add usezombie/skills
+npx skills add agentsfleet/skills
 ```
 
 This symlinks every top-level `usezombie-*` directory into each supported
@@ -40,7 +40,7 @@ host's skill path that exists on your machine (`~/.claude/skills/`,
 ### Install a single skill
 
 ```bash
-npx skills add usezombie/skills --skill usezombie-install-platform-ops
+npx skills add agentsfleet/skills --skill usezombie-install-platform-ops
 ```
 
 ### Claude Code Plugin
@@ -49,7 +49,7 @@ These skills also ship as a Claude Code plugin marketplace:
 
 ```bash
 # 1. Register the marketplace
-claude plugin marketplace add usezombie/skills
+claude plugin marketplace add agentsfleet/skills
 
 # 2. Install the plugin you want
 claude plugin install usezombie-install-platform-ops@usezombie-skills
@@ -123,7 +123,7 @@ The `SKILL.md` frontmatter follows the
 ## Release model
 
 `main` is the release surface. Push to `main` = ship. No tags, no semver —
-same model as a dotfiles repo. `npx skills add usezombie/skills` always pulls
+same model as a dotfiles repo. `npx skills add agentsfleet/skills` always pulls
 the latest commit.
 
 ## Contributing

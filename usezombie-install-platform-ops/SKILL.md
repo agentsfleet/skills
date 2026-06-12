@@ -11,7 +11,7 @@ metadata:
   author: agentsfleet
   version: "0.1.0"
   homepage: https://agentsfleet.net/docs/skills
-  source: https://github.com/usezombie/skills
+  source: https://github.com/agentsfleet/skills
   requires:
     bins: [zombiectl, gh, openssl, curl]
     optional_bins: [op]
@@ -41,7 +41,7 @@ user's machine:
 
 ```bash
 npm install -g @usezombie/zombiectl     # CLI + bundled samples (postinstall copies ~/.config/usezombie/samples/)
-npx skills add usezombie/skills         # symlinks /usezombie-* into the host's skill paths
+npx skills add agentsfleet/skills         # symlinks /usezombie-* into the host's skill paths
 zombiectl auth login                     # Clerk OAuth → token in ~/.config/usezombie/auth.json
 gh auth login -s admin:repo_hook         # one-time; lets the install-skill register webhooks via `gh api`
 ```
@@ -62,7 +62,7 @@ Manual symlink fallback (when `npx skills` is unavailable or the host
 is not in the registry):
 
 ```bash
-git clone https://github.com/usezombie/skills.git ~/.local/share/usezombie-skills
+git clone https://github.com/agentsfleet/skills.git ~/.local/share/usezombie-skills
 ln -s ~/.local/share/usezombie-skills/usezombie-install-platform-ops \
   ~/.claude/skills/usezombie-install-platform-ops
 ```
