@@ -3,18 +3,18 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/logo/dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="assets/logo/light.svg" />
-  <img src="assets/logo/dark.svg" width="200" alt="usezombie" />
+  <img src="assets/logo/dark.svg" width="200" alt="agentsfleet" />
 </picture>
 
-**Agent skills for usezombie — install, drive, and operate zombies from any AI coding host.**
+**Agent skills for agentsfleet — install, drive, and operate agents from any AI coding host.**
 
 Long-lived runtimes that own one operational outcome end to end. These skills
 teach Claude Code, Codex CLI, Amp, and OpenCode to drive `zombiectl`
 non-interactively so your agent can install, steer, and inspect agents
 without you reading every flag.
 
-[![Docs](https://img.shields.io/badge/usezombie-Docs-5EEAD4?style=for-the-badge)](https://docs.usezombie.com)
-[![Get early access](https://img.shields.io/badge/usezombie-Get_early_access-5EEAD4?style=for-the-badge)](https://usezombie.com)
+[![Docs](https://img.shields.io/badge/agentsfleet-Docs-5EEAD4?style=for-the-badge)](https://docs.agentsfleet.net)
+[![Get early access](https://img.shields.io/badge/agentsfleet-Get_early_access-5EEAD4?style=for-the-badge)](https://agentsfleet.net)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -27,7 +27,7 @@ Skills here follow the [Agent Skills](https://agentskills.io/) format and work
 with 18+ AI agent hosts including Claude Code, Codex CLI, Amp, OpenCode, and
 Cursor.
 
-### Install all usezombie skills
+### Install all agentsfleet skills
 
 ```bash
 npx skills add usezombie/skills
@@ -135,4 +135,4 @@ top-level `<skill-name>/` directory with `SKILL.md`, `references/`, and
 
 ## License
 
-MIT — Copyright (c) 2026 usezombie
+MIT — Copyright (c) 2026 agentsfleet

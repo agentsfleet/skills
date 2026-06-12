@@ -1,17 +1,17 @@
 {
   "name": "usezombie-skills",
   "owner": {
-    "name": "usezombie",
+    "name": "agentsfleet",
     "email": "hello@usezombie.com"
   },
   "metadata": {
-    "description": "Official usezombie agent skills — install, drive, and operate zombies from any AI coding host",
+    "description": "Official agentsfleet agent skills — install, drive, and operate agents from any AI coding host",
     "version": "0.1.0"
   },
   "plugins": [
     {
       "name": "usezombie-install-platform-ops",
-      "description": "Install a usezombie platform-ops zombie on this repo — watches GitHub Actions CD failures and posts evidenced diagnoses to Slack. Use when the user wants to install platform-ops on a repo, resolve tool credentials (Fly, Slack, GitHub, Upstash), register webhooks via `gh`, or run the post-install smoke test.",
+      "description": "Install an agentsfleet platform-ops agent on this repo — watches GitHub Actions CD failures and posts evidenced diagnoses to Slack. Use when the user wants to install platform-ops on a repo, resolve tool credentials (Fly, Slack, GitHub, Upstash), register webhooks via `gh`, or run the post-install smoke test.",
       "source": "./",
       "strict": false,
       "skills": ["./usezombie-install-platform-ops"]

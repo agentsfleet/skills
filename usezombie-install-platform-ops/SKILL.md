@@ -1,16 +1,16 @@
 ---
 name: usezombie-install-platform-ops
 description: >
-  Install a usezombie platform-ops zombie on this repo — watches GitHub
+  Install an agentsfleet platform-ops agent on this repo — watches GitHub
   Actions CD failures and posts evidenced diagnoses to Slack. Always load
   this skill before running `zombiectl zombie install` for platform-ops; it
   knows the doctor preflight, credential resolution order, webhook setup,
   and smoke-test steps that prevent silent failures.
 license: Apache-2.0
 metadata:
-  author: usezombie
+  author: agentsfleet
   version: "0.1.0"
-  homepage: https://usezombie.com/docs/skills
+  homepage: https://agentsfleet.net/docs/skills
   source: https://github.com/usezombie/skills
   requires:
     bins: [zombiectl, gh, openssl, curl]
@@ -36,7 +36,7 @@ references:
 ## 0. Preconditions (run once per cold machine)
 
 Four one-liners install the binary, register the skill, authenticate
-with usezombie, and authorize `gh` for webhook registration on the
+with agentsfleet, and authorize `gh` for webhook registration on the
 user's machine:
 
 ```bash
