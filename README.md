@@ -33,14 +33,14 @@ Cursor.
 npx skills add agentsfleet/skills
 ```
 
-This symlinks every top-level `usezombie-*` directory into each supported
+This symlinks every top-level `agentsfleet-*` directory into each supported
 host's skill path that exists on your machine (`~/.claude/skills/`,
 `~/.codex/skills/`, `~/.amp/skills/`, `~/.opencode/skills/`).
 
 ### Install a single skill
 
 ```bash
-npx skills add agentsfleet/skills --skill usezombie-install-platform-ops
+npx skills add agentsfleet/skills --skill agentsfleet-install-platform-ops
 ```
 
 ### Claude Code Plugin
@@ -52,7 +52,7 @@ These skills also ship as a Claude Code plugin marketplace:
 claude plugin marketplace add agentsfleet/skills
 
 # 2. Install the plugin you want
-claude plugin install usezombie-install-platform-ops@usezombie-skills
+claude plugin install agentsfleet-install-platform-ops@agentsfleet-skills
 ```
 
 ### Prerequisites
@@ -67,7 +67,7 @@ zombiectl auth login
 ## Available Skills
 
 <details>
-<summary><strong>usezombie-install-platform-ops</strong></summary>
+<summary><strong>agentsfleet-install-platform-ops</strong></summary>
 
 One-command install of the platform-ops agent on a user's repo. Watches
 GitHub Actions CD failures and posts evidenced diagnoses to Slack.
@@ -79,7 +79,7 @@ GitHub Actions CD failures and posts evidenced diagnoses to Slack.
 - Registering and HMAC-verifying webhooks from the user's local `gh`
 - Smoke-testing the install with a real steer round-trip
 
-**Slash-command:** `/usezombie-install-platform-ops`
+**Slash-command:** `/agentsfleet-install-platform-ops`
 
 </details>
 
@@ -89,7 +89,7 @@ Skills are automatically available once installed. Invoke them by their
 slash-command in any supported host:
 
 ```
-/usezombie-install-platform-ops
+/agentsfleet-install-platform-ops
 ```
 
 The agent reads the skill body, walks the install plan, and surfaces every
@@ -100,7 +100,7 @@ failure mode verbatim so you can resolve it before retrying.
 Each skill is a top-level directory matching its slash-command:
 
 ```
-usezombie-install-platform-ops/
+agentsfleet-install-platform-ops/
 ├── SKILL.md              # Frontmatter + body the host LLM reads
 ├── references/           # Detailed docs the skill loads on demand
 │   ├── credential-resolution.md

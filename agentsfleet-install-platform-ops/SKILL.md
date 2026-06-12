@@ -1,5 +1,5 @@
 ---
-name: usezombie-install-platform-ops
+name: agentsfleet-install-platform-ops
 description: >
   Install an agentsfleet platform-ops agent on this repo — watches GitHub
   Actions CD failures and posts evidenced diagnoses to Slack. Always load
@@ -31,7 +31,7 @@ references:
   - references/self-managed-handoff.md
 ---
 
-# usezombie-install-platform-ops
+# agentsfleet-install-platform-ops
 
 ## 0. Preconditions (run once per cold machine)
 
@@ -41,7 +41,7 @@ user's machine:
 
 ```bash
 npm install -g @usezombie/zombiectl     # CLI + bundled samples (postinstall copies ~/.config/usezombie/samples/)
-npx skills add agentsfleet/skills         # symlinks /usezombie-* into the host's skill paths
+npx skills add agentsfleet/skills         # symlinks /agentsfleet-* into the host's skill paths
 zombiectl auth login                     # Clerk OAuth → token in ~/.config/usezombie/auth.json
 gh auth login -s admin:repo_hook         # one-time; lets the install-skill register webhooks via `gh api`
 ```
@@ -62,9 +62,9 @@ Manual symlink fallback (when `npx skills` is unavailable or the host
 is not in the registry):
 
 ```bash
-git clone https://github.com/agentsfleet/skills.git ~/.local/share/usezombie-skills
-ln -s ~/.local/share/usezombie-skills/usezombie-install-platform-ops \
-  ~/.claude/skills/usezombie-install-platform-ops
+git clone https://github.com/agentsfleet/skills.git ~/.local/share/agentsfleet-skills
+ln -s ~/.local/share/agentsfleet-skills/agentsfleet-install-platform-ops \
+  ~/.claude/skills/agentsfleet-install-platform-ops
 ```
 
 Same shape for `~/.codex/skills/`, `~/.amp/skills/`, `~/.opencode/skills/`.
@@ -164,7 +164,7 @@ surface the diagnostic and let the user fix it before retrying.
    cache. The npm package version *is* the template version.
 
    Substitute the five placeholders into the template's `SKILL.md`
-   and `TRIGGER.md`, then write the output to `.usezombie/platform-ops/`
+   and `TRIGGER.md`, then write the output to `.agentsfleet/platform-ops/`
    in the user's CWD:
 
    | Placeholder | Source |
@@ -175,10 +175,10 @@ surface the diagnostic and let the user fix it before retrying.
    | `{{model}}` | doctor `tenant_provider.model` (real value or `""` under self-managed) |
    | `{{context_cap_tokens}}` | doctor `tenant_provider.context_cap_tokens` (real value or `0` under self-managed) |
 
-   If `.usezombie/platform-ops/` already exists, prompt overwrite
+   If `.agentsfleet/platform-ops/` already exists, prompt overwrite
    (default `N`). On `N`, exit cleanly with no changes to disk.
 
-   Run `zombiectl zombie install --from .usezombie/platform-ops/ --json`.
+   Run `zombiectl zombie install --from .agentsfleet/platform-ops/ --json`.
    Capture `zombie_id` and the `webhook_urls` map from the response.
    The map is keyed by `<source>` (`github`, `linear`, `jira`, etc.)
    with `<receiver-URL>` values. Cron-only / api-only installs return
@@ -186,7 +186,7 @@ surface the diagnostic and let the user fix it before retrying.
    `webhook_urls`, surface the captured JSON and exit with "install
    JSON missing webhook_urls — file an issue".
 8. **Parse the rendered TRIGGER.md.** Read
-   `.usezombie/platform-ops/TRIGGER.md` (the file just written in
+   `.agentsfleet/platform-ops/TRIGGER.md` (the file just written in
    step 7), extract `x-usezombie.triggers[]`, and for each `webhook`
    entry capture `source`, `events` (default empty = "all events for
    this provider"), and the optional `credential_name` override.

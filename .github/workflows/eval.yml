@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         skill:
-          - usezombie-install-platform-ops
+          - agentsfleet-install-platform-ops
     steps:
       - uses: actions/checkout@v4
 

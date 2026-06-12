@@ -1,5 +1,5 @@
 {
-  "name": "usezombie-skills",
+  "name": "agentsfleet-skills",
   "owner": {
     "name": "agentsfleet",
     "email": "hello@usezombie.com"
@@ -10,11 +10,11 @@
   },
   "plugins": [
     {
-      "name": "usezombie-install-platform-ops",
+      "name": "agentsfleet-install-platform-ops",
       "description": "Install an agentsfleet platform-ops agent on this repo — watches GitHub Actions CD failures and posts evidenced diagnoses to Slack. Use when the user wants to install platform-ops on a repo, resolve tool credentials (Fly, Slack, GitHub, Upstash), register webhooks via `gh`, or run the post-install smoke test.",
       "source": "./",
       "strict": false,
-      "skills": ["./usezombie-install-platform-ops"]
+      "skills": ["./agentsfleet-install-platform-ops"]
     }
   ]
 }

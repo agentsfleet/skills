@@ -53,7 +53,7 @@ zombiectl doctor --json | jq '.tenant_provider'
 #          context_cap_tokens: 256000, credential_ref: "fw-prod" }
 ```
 
-After step 3, every subsequent `/usezombie-install-platform-ops` run
+After step 3, every subsequent `/agentsfleet-install-platform-ops` run
 generates self-managed frontmatter automatically — the install-skill reads
 doctor and branches on `mode`. No flag, no prompt.
 
@@ -91,7 +91,7 @@ when no `tenant_providers` row exists).
 
 - Picking which provider to use — that's a product decision (cost,
   context window, model quality, region). The cap.json endpoint at
-  `https://api.usezombie.com/_um/da5b6b3810543fe108d816ee972e4ff8/cap.json`
+  `https://api.agentsfleet.net/_um/da5b6b3810543fe108d816ee972e4ff8/cap.json`
   lists every supported model with its context cap and per-token rate.
 - Multi-provider routing — there is one active provider per tenant.
   Per-zombie provider override is a future milestone.
