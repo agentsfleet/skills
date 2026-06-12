@@ -26,7 +26,7 @@ Two visible effects after switching to self-managed:
 - **Frontmatter sentinels.** Every agent installed *after* the
   switch carries `model: ""` and `context_cap_tokens: 0` in its
   generated TRIGGER.md. The worker overlays the real values from
-  `core.tenant_providers` at trigger time. Zombies installed *before*
+  `core.tenant_providers` at trigger time. Agents installed *before*
   the switch keep their pinned values; the user can re-run the
   install-skill on each repo to re-pin against the new posture, or
   hand-edit the frontmatter if they prefer.

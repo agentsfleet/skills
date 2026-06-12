@@ -28,7 +28,7 @@ This document is the lookup table the agent loads when an exit happens.
 | 10 — webhook self-test | Network error to api.agentsfleet.net | DNS, captive portal, firewall | `curl` stderr verbatim | Resolve network, retry |
 | 10 — webhook self-test | HMAC mismatch with stored secret | Race between `credential add` and `credential show` cache, or local CSPRNG bug | Computed signature verbatim alongside the receiver's expected | Retry once; if persistent, regenerate via `--force` |
 | 12 — smoke steer | Round-trip > 60 seconds | Worker not picking up event | `agent installed but first response slow — check agentsfleet events {id}` | `agentsfleet events {id}` to see where it hung |
-| 12 — smoke steer | `agentsfleet steer` returns error | Zombie status not `active`, or RPC failure | `agentsfleet steer` stderr verbatim | Check `agentsfleet status {id}`, then retry |
+| 12 — smoke steer | `agentsfleet steer` returns error | Agent status not `active`, or RPC failure | `agentsfleet steer` stderr verbatim | Check `agentsfleet status {id}`, then retry |
 | post-install | npm postinstall logged a warning | FS permission issue, full disk, weird platform | `~/.config/agentsfleet/samples/` was not populated; user will hit step 7's "missing template" path on next install | Fix the FS issue, re-run `npm install -g @agentsfleet/cli` |
 
 ## What the skill never does on failure
