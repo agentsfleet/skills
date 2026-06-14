@@ -29,7 +29,7 @@ test("frontmatter declares all three operator inputs", () => {
 
 test("frontmatter declares required + optional binaries", () => {
   const fm = frontmatter(skillBody);
-  expect(fm).toMatch(/bins: \[zombiectl, gh, openssl, curl\]/);
+  expect(fm).toMatch(/bins: \[agentsfleet, gh, openssl, curl\]/);
   expect(fm).toMatch(/optional_bins: \[op\]/);
 });
 

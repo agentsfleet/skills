@@ -3,18 +3,18 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/logo/dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="assets/logo/light.svg" />
-  <img src="assets/logo/dark.svg" width="200" alt="usezombie" />
+  <img src="assets/logo/dark.svg" height="40" alt="agentsfleet" />
 </picture>
 
-**Agent skills for usezombie — install, drive, and operate zombies from any AI coding host.**
+**Agent skills for agentsfleet — install, drive, and operate agents from any AI coding host.**
 
 Long-lived runtimes that own one operational outcome end to end. These skills
-teach Claude Code, Codex CLI, Amp, and OpenCode to drive `zombiectl`
+teach Claude Code, Codex CLI, Amp, and OpenCode to drive `agentsfleet`
 non-interactively so your agent can install, steer, and inspect agents
 without you reading every flag.
 
-[![Docs](https://img.shields.io/badge/usezombie-Docs-5EEAD4?style=for-the-badge)](https://docs.usezombie.com)
-[![Get early access](https://img.shields.io/badge/usezombie-Get_early_access-5EEAD4?style=for-the-badge)](https://usezombie.com)
+[![Docs](https://img.shields.io/badge/agentsfleet-Docs-5EEAD4?style=for-the-badge)](https://docs.agentsfleet.net)
+[![Get early access](https://img.shields.io/badge/agentsfleet-Get_early_access-5EEAD4?style=for-the-badge)](https://agentsfleet.net)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -27,20 +27,20 @@ Skills here follow the [Agent Skills](https://agentskills.io/) format and work
 with 18+ AI agent hosts including Claude Code, Codex CLI, Amp, OpenCode, and
 Cursor.
 
-### Install all usezombie skills
+### Install all agentsfleet skills
 
 ```bash
-npx skills add usezombie/skills
+npx skills add agentsfleet/skills
 ```
 
-This symlinks every top-level `usezombie-*` directory into each supported
+This symlinks every top-level `agentsfleet-*` directory into each supported
 host's skill path that exists on your machine (`~/.claude/skills/`,
 `~/.codex/skills/`, `~/.amp/skills/`, `~/.opencode/skills/`).
 
 ### Install a single skill
 
 ```bash
-npx skills add usezombie/skills --skill usezombie-install-platform-ops
+npx skills add agentsfleet/skills --skill agentsfleet-install-platform-ops
 ```
 
 ### Claude Code Plugin
@@ -49,25 +49,25 @@ These skills also ship as a Claude Code plugin marketplace:
 
 ```bash
 # 1. Register the marketplace
-claude plugin marketplace add usezombie/skills
+claude plugin marketplace add agentsfleet/skills
 
 # 2. Install the plugin you want
-claude plugin install usezombie-install-platform-ops@usezombie-skills
+claude plugin install agentsfleet-install-platform-ops@agentsfleet-skills
 ```
 
 ### Prerequisites
 
-Most skills here drive `zombiectl`. Install it first:
+Most skills here drive `agentsfleet`. Install it first:
 
 ```bash
-npm install -g @usezombie/zombiectl
-zombiectl auth login
+npm install -g @agentsfleet/cli
+agentsfleet auth login
 ```
 
 ## Available Skills
 
 <details>
-<summary><strong>usezombie-install-platform-ops</strong></summary>
+<summary><strong>agentsfleet-install-platform-ops</strong></summary>
 
 One-command install of the platform-ops agent on a user's repo. Watches
 GitHub Actions CD failures and posts evidenced diagnoses to Slack.
@@ -79,7 +79,7 @@ GitHub Actions CD failures and posts evidenced diagnoses to Slack.
 - Registering and HMAC-verifying webhooks from the user's local `gh`
 - Smoke-testing the install with a real steer round-trip
 
-**Slash-command:** `/usezombie-install-platform-ops`
+**Slash-command:** `/agentsfleet-install-platform-ops`
 
 </details>
 
@@ -89,7 +89,7 @@ Skills are automatically available once installed. Invoke them by their
 slash-command in any supported host:
 
 ```
-/usezombie-install-platform-ops
+/agentsfleet-install-platform-ops
 ```
 
 The agent reads the skill body, walks the install plan, and surfaces every
@@ -100,7 +100,7 @@ failure mode verbatim so you can resolve it before retrying.
 Each skill is a top-level directory matching its slash-command:
 
 ```
-usezombie-install-platform-ops/
+agentsfleet-install-platform-ops/
 ├── SKILL.md              # Frontmatter + body the host LLM reads
 ├── references/           # Detailed docs the skill loads on demand
 │   ├── credential-resolution.md
@@ -123,7 +123,7 @@ The `SKILL.md` frontmatter follows the
 ## Release model
 
 `main` is the release surface. Push to `main` = ship. No tags, no semver —
-same model as a dotfiles repo. `npx skills add usezombie/skills` always pulls
+same model as a dotfiles repo. `npx skills add agentsfleet/skills` always pulls
 the latest commit.
 
 ## Contributing
@@ -135,4 +135,4 @@ top-level `<skill-name>/` directory with `SKILL.md`, `references/`, and
 
 ## License
 
-MIT — Copyright (c) 2026 usezombie
+MIT — Copyright (c) 2026 agentsfleet
