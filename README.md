@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/logo/dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="assets/logo/light.svg" />
-  <img src="assets/logo/dark.svg" width="200" alt="agentsfleet" />
+  <img src="assets/logo/dark.svg" height="40" alt="agentsfleet" />
 </picture>
 
 **Agent skills for agentsfleet — install, drive, and operate agents from any AI coding host.**
