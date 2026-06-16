@@ -8,10 +8,11 @@
 
 **Agent skills for agentsfleet — install, drive, and operate agents from any AI coding host.**
 
-Long-lived runtimes that own one operational outcome end to end. These skills
-teach Claude Code, Codex CLI, Amp, and OpenCode to drive `agentsfleet`
-non-interactively so your agent can install, steer, and inspect agents
-without you reading every flag.
+agentsfleet is a resident engineer for support escalations — it takes a ticket
+through investigation, human-approved remediation, and a customer reply. These
+skills teach Claude Code, Codex CLI, Amp, and OpenCode to drive `agentsfleet`
+non-interactively so your agent can install, steer, and inspect agents without
+you reading every flag.
 
 [![Docs](https://img.shields.io/badge/agentsfleet-Docs-5EEAD4?style=for-the-badge)](https://docs.agentsfleet.net)
 [![Get early access](https://img.shields.io/badge/agentsfleet-Get_early_access-5EEAD4?style=for-the-badge)](https://agentsfleet.net)
